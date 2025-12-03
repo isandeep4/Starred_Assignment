@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 
-export default function ProfileIcon() {
+export default function Profile() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

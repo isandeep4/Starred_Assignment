@@ -1,7 +1,7 @@
 'use client';
 
 import Search from './Search';
-import ProfileIcon from './ProfileIcon';
+import ProfileIcon from './Profile';
 
 export default function Header() {
   return (
