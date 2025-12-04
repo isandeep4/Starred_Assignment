@@ -1,7 +1,6 @@
 import React from 'react';
 
 const UserProfile: React.FC = () => {
-  // Mock user data
   const user = {
     name: 'John Doe',
     email: 'john.doe@example.com',
