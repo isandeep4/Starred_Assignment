@@ -13,11 +13,9 @@ export default function Search() {
     setSearchQuery(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      router.push(`/jobs/search?q=${encodeURIComponent(searchQuery)}`);
-    }
+    router.push(`/jobs/search?q=${encodeURIComponent(searchQuery)}`);
   };
 
   return (

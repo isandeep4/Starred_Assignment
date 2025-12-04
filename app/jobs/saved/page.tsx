@@ -1,12 +1,18 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Job } from '../../components/JobItem';
 
 export default function SavedJobsPage() {
-  const [savedJobs] = useState([
-    { id: 1, title: 'Software Engineer', company: 'Tech Corp', location: 'Remote', description: 'We are looking for a skilled software engineer...', requirements: 'React, Node.js' },
-    { id: 2, title: 'Product Manager', company: 'Innovate Ltd', location: 'San Francisco', description: 'Lead product development...', requirements: 'MBA, experience' },
-  ]);
+const [savedJobs, setSavedJobs] = useState<Job[]>([]);
+
+  useEffect(() => {
+    // Load saved jobs from localStorage
+    const saved = localStorage.getItem('savedJobs');
+    if (saved) {
+      setSavedJobs(JSON.parse(saved));
+    }
+  }, []);
 
   return (
     <div className="p-4">

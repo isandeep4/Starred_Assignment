@@ -1,46 +1,36 @@
+
 import React from 'react';
 import JobDetails from '../../components/JobDetails';
 
-// Mock data - in a real app, this would come from an API or database
-const mockJobs = [
-  {
-    id: 1,
-    title: 'Software Engineer',
-    company: 'Tech Corp',
-    location: 'San Francisco, CA',
-    description: 'We are looking for a skilled software engineer to join our team.',
-    requirements: 'Experience with React, Node.js, and TypeScript.'
-  },
-  {
-    id: 2,
-    title: 'Product Manager',
-    company: 'Innovate Ltd',
-    location: 'New York, NY',
-    description: 'Lead product development initiatives.',
-    requirements: '5+ years of product management experience.'
-  },
-  {
-    id: 3,
-    title: 'Designer',
-    company: 'Creative Studio',
-    location: 'Los Angeles, CA',
-    description: 'Create stunning user interfaces.',
-    requirements: 'Proficiency in Figma and Adobe Creative Suite.'
-  }
-];
-
 interface PageProps {
   params: Promise<{ id: string }>;
+}
+async function fetchJobById(id: string) {
+  const baseUrl = process.env.NEXT_PUBLIC_JOBS_API_BASE_URL;
+  const endpoint = process.env.NEXT_PUBLIC_JOBS_API_JOBS_ENDPOINT;
+  const response = await fetch(`${baseUrl}${endpoint}/${id}`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch job details');
+  }
+  const data = await response.json();
+  const job = {
+    id: data.id,
+    title: data.job_title,
+    company: data.company,
+    description: data.description,
+  };
+
+  return job;
 }
 
 const JobPage: React.FC<PageProps> = async ({ params }) => {
   const { id } = await params;
   const jobId = parseInt(id, 10);
-  const job = mockJobs.find(j => j.id === jobId);
+  const job = await fetchJobById(jobId.toString());
 
   return (
     <div className="container mx-auto p-4">
-      <JobDetails job={job || null} />
+      <JobDetails job={job} />
     </div>
   );
 };

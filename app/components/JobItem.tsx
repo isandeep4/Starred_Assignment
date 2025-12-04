@@ -4,9 +4,9 @@ interface Job {
   id: number;
   title: string;
   company: string;
-  location: string;
+  location?: string;
   description: string;
-  requirements: string;
+  requirements?: string;
 }
 
 interface JobItemProps {
@@ -38,13 +38,7 @@ const JobItem: React.FC<JobItemProps> = ({
   return (
     <div className={classes} onClick={handleClick}>
       <h3 className="font-semibold">{job.title}</h3>
-      <p className="text-gray-600">{job.company} - {job.location}</p>
-      {showDetails && (
-        <>
-          <p className="mt-2">{job.description}</p>
-          <p className="mt-2 text-sm"><strong>Requirements:</strong> {job.requirements}</p>
-        </>
-      )}
+      <p className="text-gray-600">{job.company}</p>
     </div>
   );
 };
