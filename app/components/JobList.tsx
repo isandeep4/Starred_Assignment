@@ -5,9 +5,10 @@ interface JobListProps {
   jobs: Job[];
   selectedJob: Job | null;
   onJobSelect: (job: Job) => void;
+  navigateToJobDetails?: boolean;
 }
 
-const JobList: React.FC<JobListProps> = ({ jobs, selectedJob, onJobSelect }) => {
+const JobList: React.FC<JobListProps> = ({ jobs, selectedJob, onJobSelect, navigateToJobDetails }) => {
   return (
     <div className="p-4">
       <h2 className="text-xl font-bold mb-4">Job List</h2>
@@ -20,6 +21,7 @@ const JobList: React.FC<JobListProps> = ({ jobs, selectedJob, onJobSelect }) => 
               onSelect={onJobSelect}
               showDetails={false}
               isSelected={selectedJob?.id === job.id}
+              navigateToJobDetails={navigateToJobDetails}
             />
           </li>
         ))}

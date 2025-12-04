@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSavedJobsStore } from '../store/useSavedJobsStore';
 
 interface Job {
   id: number;
@@ -14,15 +15,16 @@ interface Job {
 
 const SavedJobs: React.FC = () => {
   const router = useRouter();
-  const [savedJobs, setSavedJobs] = useState<Job[]>([]);
+  const {savedJobs} = useSavedJobsStore();
+  // const [savedJobs, setSavedJobs] = useState<Job[]>([]);
 
-  useEffect(() => {
-    // Load saved jobs from localStorage
-    const saved = localStorage.getItem('savedJobs');
-    if (saved) {
-      setSavedJobs(JSON.parse(saved));
-    }
-  }, []);
+  // useEffect(() => {
+  //   // Load saved jobs from localStorage
+  //   const saved = localStorage.getItem('savedJobs');
+  //   if (saved) {
+  //     setSavedJobs(JSON.parse(saved));
+  //   }
+  // }, []);
 
   const handleNavigateToSaved = () => {
     router.push('/jobs/saved');

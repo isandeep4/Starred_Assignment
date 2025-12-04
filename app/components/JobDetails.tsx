@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useSavedJobsStore } from '../store/useSavedJobsStore';
 
 interface Job {
   id: number;
@@ -16,45 +17,14 @@ interface JobDetailsProps {
 }
 
 const JobDetails: React.FC<JobDetailsProps> = ({ job }) => {
-  const [isSaved, setIsSaved] = useState(false);
-  const [savedJobs, setSavedJobs] = useState<Job[]>([]);
-
-  useEffect(() => {
-    // Load saved jobs from localStorage
-    const saved = localStorage.getItem('savedJobs');
-    if (saved) {
-      const parsedSavedJobs = JSON.parse(saved);
-      setSavedJobs(parsedSavedJobs);
-      if (job) {
-        setIsSaved(parsedSavedJobs.some((savedJob: Job) => savedJob.id === job.id));
-      }
-    }
-  }, [job]);
+  const {savedJobs, toggleJob} = useSavedJobsStore();
+  const isSaved = savedJobs.some((savedJob) => savedJob.id === job?.id);
 
   const handleApply = () => {
     if (job) {
       // For now, just show an alert. In a real app, this would redirect to an application form
       alert(`Application submitted for: ${job.title} at ${job.company}`);
     }
-  };
-
-  const handleSave = () => {
-    if (!job) return;
-
-    let updatedSavedJobs = [...savedJobs];
-
-    if (isSaved) {
-      // Remove from saved jobs
-      updatedSavedJobs = savedJobs.filter(savedJob => savedJob.id !== job.id);
-      setIsSaved(false);
-    } else {
-      // Add to saved jobs
-      updatedSavedJobs.push(job);
-      setIsSaved(true);
-    }
-
-    setSavedJobs(updatedSavedJobs);
-    localStorage.setItem('savedJobs', JSON.stringify(updatedSavedJobs));
   };
 
   return (
@@ -88,7 +58,7 @@ const JobDetails: React.FC<JobDetailsProps> = ({ job }) => {
               Apply Now
             </button>
             <button
-              onClick={handleSave}
+              onClick={()=> toggleJob(job)}
               className={`font-bold py-2 px-6 rounded-lg border-2 transition-colors ${
                 isSaved
                   ? 'bg-green-600 hover:bg-green-700 text-white border-green-600'
