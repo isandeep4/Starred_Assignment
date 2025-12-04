@@ -15,7 +15,14 @@ export default function Search() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`/jobs/search?q=${encodeURIComponent(searchQuery)}`);
+    if (searchQuery.trim()) {
+      // Store recent search
+      const recentSearches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+      const updatedSearches = [searchQuery.trim(), ...recentSearches.filter((s: string) => s !== searchQuery.trim())].slice(0, 5);
+      localStorage.setItem('recentSearches', JSON.stringify(updatedSearches));
+
+      router.push(`/jobs/search?q=${encodeURIComponent(searchQuery)}`);
+    }
   };
 
   return (

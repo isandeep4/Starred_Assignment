@@ -43,13 +43,13 @@ const RecommendedJobs: React.FC = async () => {
   const jobs = allJobs.slice(0, 3); // Show only first 3 jobs
 
   return (
-    <div className="p-4">
+    <div className="bg-white rounded-lg shadow-md p-6 mb-6">
       <h2 className="text-xl font-bold mb-4">Recommended Jobs</h2>
       <RecommendedJobsList jobs={jobs} />
       <div className="mt-4 text-center">
         <a
           href="/jobs"
-          className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
         >
           Show All Jobs
         </a>
