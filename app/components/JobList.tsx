@@ -1,13 +1,5 @@
 import React from 'react';
-
-interface Job {
-  id: number;
-  title: string;
-  company: string;
-  location: string;
-  description: string;
-  requirements: string;
-}
+import JobItem, { Job } from './JobItem';
 
 interface JobListProps {
   jobs: Job[];
@@ -21,15 +13,14 @@ const JobList: React.FC<JobListProps> = ({ jobs, selectedJob, onJobSelect }) => 
       <h2 className="text-xl font-bold mb-4">Job List</h2>
       <ul>
         {jobs.map((job) => (
-          <li
-            key={job.id}
-            className={`p-4 rounded shadow hover:shadow-md cursor-pointer transition ${
-              selectedJob?.id === job.id ? 'bg-gray-200 border-l' : 'hover:bg-gray-100'
-            }`}
-            onClick={() => onJobSelect(job)}
-          >
-            <h3 className="font-semibold">{job.title}</h3>
-            <p className="text-sm text-gray-600">{job.company} - {job.location}</p>
+          <li key={job.id}>
+            <JobItem
+              job={job}
+              isSelectable={true}
+              onSelect={onJobSelect}
+              showDetails={false}
+              isSelected={selectedJob?.id === job.id}
+            />
           </li>
         ))}
       </ul>

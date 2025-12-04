@@ -1,22 +1,52 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { useSearchParams } from 'next/navigation';
 import JobList from '../../components/JobList';
 import JobDetails from '../../components/JobDetails';
+
+interface ApiJob {
+  id: number;
+  job_title: string;
+  company: string;
+  description: string;
+}
+interface Job {
+  id: number;
+  title: string;
+  company: string;
+  location?: string;
+  description: string;
+  requirements?: string;
+}
 
 export default function SearchPage() {
   const [selectedJob, setSelectedJob] = useState(null);
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
+  const [jobs, setJobs] = useState<Job[]>([]);
 
-  const allJobs = [
-    { id: 1, title: 'Software Engineer', company: 'Tech Corp', location: 'Remote', description: 'We are looking for a skilled software engineer to join our team...', requirements: 'Experience with React, Node.js, etc.' },
-    { id: 2, title: 'Product Manager', company: 'Innovate Ltd', location: 'San Francisco', description: 'Lead product development initiatives...', requirements: 'MBA, 5+ years experience.' },
-    { id: 3, title: 'Designer', company: 'Creative Inc', location: 'New York', description: 'Design user interfaces and experiences...', requirements: 'Figma, Adobe Suite.' },
-  ];
-
-  const jobs = query ? allJobs.filter(job => job.title.toLowerCase().includes(query.toLowerCase())) : allJobs;
+  useEffect(() => {
+    const fetchSearchResults = async () => {
+      if (query) {
+         const response = await fetch('/api/jobs/search', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              keyword: query.trim()
+            }),
+          });
+          const data = response.ok ? await response.json().then(res => res.data) : []
+        setJobs(data);
+        setSelectedJob(data.length > 0 ? data[0] : null);
+      } else {
+        setSelectedJob(null);
+      }
+    };
+    fetchSearchResults();
+  }, [query]);
 
   return (
     <div className="flex h-screen">
