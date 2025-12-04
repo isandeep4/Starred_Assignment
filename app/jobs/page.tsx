@@ -44,6 +44,7 @@ export default function JobsPage() {
       }
       return response.json();
     },
+    staleTime: 1000 * 60 * 5,
     placeholderData: (previousData) => previousData,
   });
 
