@@ -1,4 +1,4 @@
-# Next.js Getting Started
+### Job Search Dashboard
 
 ## Features
 
