@@ -29,7 +29,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
       total: jobs.length,
       pagination: data.pagination.currentPage,
       firstPage: data.pagination.firstPage,
-        lastPage: data.pagination.lastPage
+      lastPage: data.pagination.lastPage
     });
 
   } catch (error) {
