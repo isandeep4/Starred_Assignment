@@ -15,6 +15,7 @@ interface JobItemProps {
   onSelect?: (job: Job) => void;
   showDetails?: boolean;
   isSelected?: boolean;
+  navigateToJobDetails?: boolean;
 }
 
 const JobItem: React.FC<JobItemProps> = ({
@@ -22,11 +23,13 @@ const JobItem: React.FC<JobItemProps> = ({
   isSelectable = false,
   onSelect,
   showDetails = false,
-  isSelected = false
+  isSelected = false,
+  navigateToJobDetails=false,
 }) => {
   const handleClick = () => {
     if (isSelectable && onSelect) {
       onSelect(job);
+      navigateToJobDetails && (window.location.href = `/jobs/${job.id}`);
     }
   };
 

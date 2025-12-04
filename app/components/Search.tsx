@@ -4,10 +4,13 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { useRecentSearchesStore } from '../store/useRecentSearchesStore';
 
 export default function Search() {
   const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
+  const {searches, addSearch} = useRecentSearchesStore();
+
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -17,9 +20,10 @@ export default function Search() {
     e.preventDefault();
     if (searchQuery.trim()) {
       // Store recent search
-      const recentSearches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
-      const updatedSearches = [searchQuery.trim(), ...recentSearches.filter((s: string) => s !== searchQuery.trim())].slice(0, 5);
-      localStorage.setItem('recentSearches', JSON.stringify(updatedSearches));
+       addSearch(searchQuery);
+      // const recentSearches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+      // const updatedSearches = [searchQuery.trim(), ...recentSearches.filter((s: string) => s !== searchQuery.trim())].slice(0, 5);
+      // localStorage.setItem('recentSearches', JSON.stringify(updatedSearches));
 
       router.push(`/jobs/search?q=${encodeURIComponent(searchQuery)}`);
     }
