@@ -1,3 +1,5 @@
+import { faUserTie } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 
 const UserProfile: React.FC = () => {
@@ -9,8 +11,8 @@ const UserProfile: React.FC = () => {
   };
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow-md">
-      <img src={user.avatar} alt="Profile" className="w-16 h-16 rounded-full mx-auto mb-4" />
+    <div className="p-4 bg-white rounded-lg shadow-md flex flex-col items-center">
+      <FontAwesomeIcon icon={faUserTie} />
       <h3 className="text-lg font-semibold text-center">{user.name}</h3>
       <p className="text-sm text-gray-600 text-center">{user.email}</p>
     </div>

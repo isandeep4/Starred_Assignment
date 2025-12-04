@@ -37,9 +37,6 @@ export default function JobsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const searchParams = useSearchParams();
-  const searchQuery = searchParams.get('q') || '';
-
   useEffect(() => {
     const loadJobs = async () => {
       setLoading(true);
